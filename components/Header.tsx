@@ -28,7 +28,7 @@ export default function Header({ back = false }: { back?: boolean }) {
             href={`https://instagram.com/${INSTAGRAM}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm text-muted hover:text-white"
+            className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm text-muted hover:text-fg"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
             <span className="hidden sm:inline">@{INSTAGRAM}</span>

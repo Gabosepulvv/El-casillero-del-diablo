@@ -24,7 +24,7 @@ export default async function AdminPage() {
       <>
         <AdminHeader />
         <main className="mx-auto max-w-3xl px-4 py-10">
-          <div className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-5 text-amber-200">
+          <div className="rounded-2xl border border-amber-300 bg-amber-50 p-5 text-amber-800">
             ⚙️ Falta configurar Supabase (NEXT_PUBLIC_SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY). Revisa el README.
           </div>
         </main>
@@ -61,12 +61,12 @@ export default async function AdminPage() {
               <article key={p.id} className="flex gap-3 rounded-2xl border border-line bg-panel p-3">
                 <Link href={`/p/${p.id}`} target="_blank" className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-panel-2">
                   {p.images[0] && <img src={imageUrl(p.images[0])} alt="" className={`h-full w-full object-cover ${p.sold ? "grayscale" : ""}`} />}
-                  {p.sold && <span className="absolute inset-x-0 bottom-0 bg-devil py-0.5 text-center text-[10px] font-black">VENDIDO</span>}
+                  {p.sold && <span className="absolute inset-x-0 bottom-0 bg-red-600 py-0.5 text-center text-[10px] font-black text-white">VENDIDO</span>}
                 </Link>
                 <div className="min-w-0 flex-1">
                   <h3 className="truncate font-semibold">{p.title}</h3>
                   <p className="text-sm text-muted">
-                    <b className="text-white">{formatPrice(p.price)}</b> · {p.condition}/10 · {p.category}
+                    <b className="text-fg">{formatPrice(p.price)}</b> · {p.condition}/10 · {p.category}
                   </p>
                   <div className="mt-2">
                     <ProductActions id={p.id} sold={p.sold} title={p.title} />
@@ -78,7 +78,7 @@ export default async function AdminPage() {
 
         <Link
           href="/admin/nuevo"
-          className="btn btn-primary fixed bottom-5 left-1/2 z-20 -translate-x-1/2 px-6 py-4 text-base shadow-2xl shadow-devil/30"
+          className="btn btn-primary fixed bottom-5 left-1/2 z-20 -translate-x-1/2 px-6 py-4 text-base shadow-xl shadow-black/20"
         >
           ＋ Nuevo producto
         </Link>

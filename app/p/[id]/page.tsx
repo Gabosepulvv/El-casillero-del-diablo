@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: Params) {
                 {p.title}
               </h1>
               <div className="mt-3 flex items-center justify-between gap-3">
-                <p className={`text-3xl font-black sm:text-4xl ${p.sold ? "text-muted line-through" : "text-devil-grad"}`}>
+                <p className={`text-3xl font-black sm:text-4xl ${p.sold ? "text-muted line-through" : "text-fg"}`}>
                   {formatPrice(p.price)}
                 </p>
                 <ShareButton title={p.title} />
@@ -73,13 +73,13 @@ export default async function ProductPage({ params }: Params) {
             {p.description && (
               <div className="rounded-3xl border border-line bg-panel p-5">
                 <span className="label">Descripción</span>
-                <p className="whitespace-pre-line leading-relaxed text-white/90">{p.description}</p>
+                <p className="whitespace-pre-line leading-relaxed text-fg/90">{p.description}</p>
               </div>
             )}
 
             {p.sold ? (
-              <div className="rounded-3xl border border-devil/40 bg-devil/10 p-6 text-center">
-                <div className="text-4xl">😈</div>
+              <div className="rounded-3xl border border-line bg-panel-2 p-6 text-center">
+                <div className="text-4xl">🏷️</div>
                 <p className="mt-2 font-bold">Este producto ya se vendió</p>
                 <p className="mt-1 text-sm text-muted">Revisa los demás productos disponibles 👇</p>
               </div>

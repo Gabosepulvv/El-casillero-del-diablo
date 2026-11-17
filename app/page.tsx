@@ -18,19 +18,19 @@ export default async function Home() {
             className="text-3xl font-bold leading-tight sm:text-5xl"
             style={{ fontFamily: "var(--font-grotesk)" }}
           >
-            <span className="text-devil-grad">{STORE_NAME}</span>
+            {STORE_NAME}
           </h1>
-          <p className="mt-2 text-muted sm:text-lg">{STORE_TAGLINE}</p>
+          <p className="mt-2 max-w-xl text-muted sm:text-lg">{STORE_TAGLINE}</p>
           {products.length > 0 && (
-            <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-panel px-3 py-1 text-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+            <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-panel-2 px-3 py-1 text-sm font-medium">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
               {available} disponible{available === 1 ? "" : "s"}
             </p>
           )}
         </section>
 
         {!isConfigured() && (
-          <div className="mb-6 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
+          <div className="mb-6 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
             ⚙️ Falta configurar Supabase. Sigue los pasos del <b>README</b> para conectar la base de datos.
           </div>
         )}
@@ -38,7 +38,7 @@ export default async function Home() {
         <Catalog products={products} />
       </main>
       <footer className="border-t border-line/60 py-6 text-center text-xs text-muted">
-        ¿Te interesa algo? Entra al producto y escríbeme por WhatsApp 😈
+        ¿Te interesa algo? Entra al producto y escríbeme por WhatsApp
       </footer>
     </>
   );

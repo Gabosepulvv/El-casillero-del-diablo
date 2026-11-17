@@ -64,7 +64,7 @@ export default function Gallery({ images, alt, sold }: { images: string[]; alt: 
 
         {sold && (
           <div className="pointer-events-none absolute inset-0 grid place-items-center bg-black/30">
-            <span className="-rotate-12 rounded-xl border-4 border-white bg-devil px-6 py-2 text-3xl font-black tracking-widest text-white shadow-2xl">
+            <span className="-rotate-12 rounded-xl border-4 border-white bg-red-600 px-6 py-2 text-3xl font-black tracking-widest text-white shadow-2xl">
               VENDIDO
             </span>
           </div>
@@ -92,7 +92,7 @@ export default function Gallery({ images, alt, sold }: { images: string[]; alt: 
             <button
               key={src}
               onClick={() => go(i)}
-              className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition ${i === idx ? "border-devil" : "border-transparent opacity-60"}`}
+              className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition ${i === idx ? "border-accent" : "border-transparent opacity-60"}`}
             >
               <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
             </button>

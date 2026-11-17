@@ -9,11 +9,11 @@ export default function AdminHeader() {
           <img src="/icon.svg" alt="" width={26} height={26} />
           Panel
         </Link>
-        <Link href="/" target="_blank" className="ml-auto rounded-full border border-line px-3 py-1.5 text-xs text-muted hover:text-white">
+        <Link href="/" target="_blank" className="ml-auto rounded-full border border-line px-3 py-1.5 text-xs text-muted hover:text-fg">
           Ver tienda ↗
         </Link>
         <form action={logout}>
-          <button className="rounded-full border border-line px-3 py-1.5 text-xs text-muted hover:text-white">Salir</button>
+          <button className="rounded-full border border-line px-3 py-1.5 text-xs text-muted hover:text-fg">Salir</button>
         </form>
       </div>
     </header>

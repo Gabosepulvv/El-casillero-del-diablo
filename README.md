@@ -1,4 +1,4 @@
-# 😈 El Casillero del Diablo
+# 🏷️ Ventas Gabriel
 
 Tienda personal para vender cosas que ya no uso. Pensada para compartir el link en TikTok/Instagram y que la gente vea los productos y te escriba por WhatsApp desde el celular.
 

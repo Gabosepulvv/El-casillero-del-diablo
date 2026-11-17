@@ -79,7 +79,7 @@ export default function Catalog({ products }: { products: Product[] }) {
           <button
             key={k}
             onClick={() => setStatus(k)}
-            className={`whitespace-nowrap rounded-full px-2 py-2 font-semibold transition ${status === k ? "bg-white text-ink" : "text-muted"}`}
+            className={`whitespace-nowrap rounded-full px-2 py-2 font-semibold transition ${status === k ? "bg-fg text-white" : "text-muted"}`}
           >
             {label}
           </button>
@@ -92,7 +92,7 @@ export default function Catalog({ products }: { products: Product[] }) {
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as Sort)}
-          className="rounded-full border border-line bg-panel px-3 py-1.5 text-sm text-white/80 outline-none"
+          className="rounded-full border border-line bg-panel px-3 py-1.5 text-sm text-fg/80 outline-none"
           aria-label="Ordenar"
         >
           <option value="recent">Más recientes</option>
@@ -111,7 +111,7 @@ export default function Catalog({ products }: { products: Product[] }) {
         </div>
       ) : (
         <div className="mt-16 text-center text-muted">
-          <div className="text-5xl">🕳️</div>
+          <div className="text-5xl">📦</div>
           <p className="mt-3">
             {products.length ? "No hay productos con esos filtros." : "Aún no hay productos publicados."}
           </p>
@@ -126,7 +126,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
-        active ? "border-transparent bg-devil-grad text-white" : "border-line bg-panel text-white/80 hover:border-muted"
+        active ? "border-transparent bg-fg text-white" : "border-line bg-panel text-fg/80 hover:border-muted"
       }`}
     >
       {children}

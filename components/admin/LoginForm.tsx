@@ -12,7 +12,7 @@ export default function LoginForm() {
       <p className="mt-1 text-center text-sm text-muted">Solo para el dueño de la tienda.</p>
       <label className="label mt-6" htmlFor="pw">Contraseña</label>
       <input id="pw" name="password" type="password" className="input" autoComplete="current-password" required autoFocus />
-      {state?.error && <p className="mt-3 rounded-xl bg-red-500/15 px-3 py-2 text-sm text-red-300">{state.error}</p>}
+      {state?.error && <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>}
       <button className="btn btn-primary mt-5 w-full" disabled={pending}>{pending ? "Entrando…" : "Entrar"}</button>
     </form>
   );

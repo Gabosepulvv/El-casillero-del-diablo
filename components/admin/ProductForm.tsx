@@ -118,7 +118,7 @@ export default function ProductForm({ product, categories }: { product?: Product
             <div key={img.key} className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-panel-2">
               <img src={img.preview} alt="" className="h-full w-full object-cover" />
               {i === 0 && (
-                <span className="absolute left-1.5 top-1.5 rounded-full bg-devil px-2 py-0.5 text-[10px] font-bold">PORTADA</span>
+                <span className="absolute left-1.5 top-1.5 rounded-full bg-accent px-2 py-0.5 text-[10px] font-bold text-white">PORTADA</span>
               )}
               <button
                 type="button"
@@ -138,7 +138,7 @@ export default function ProductForm({ product, categories }: { product?: Product
             <button
               type="button"
               onClick={() => fileInput.current?.click()}
-              className="grid aspect-square place-items-center rounded-2xl border-2 border-dashed border-line text-muted hover:border-devil hover:text-white"
+              className="grid aspect-square place-items-center rounded-2xl border-2 border-dashed border-line text-muted hover:border-accent hover:text-fg"
             >
               <span className="text-center text-sm">
                 <span className="block text-3xl">＋</span>Agregar
@@ -178,7 +178,7 @@ export default function ProductForm({ product, categories }: { product?: Product
           </datalist>
           <div className="no-scrollbar mt-2 flex gap-1.5 overflow-x-auto">
             {categories.slice(0, 12).map((c) => (
-              <button type="button" key={c} onClick={() => setCategory(c)} className={`shrink-0 rounded-full border px-2.5 py-1 text-xs ${category === c ? "border-devil bg-devil/20" : "border-line text-muted"}`}>
+              <button type="button" key={c} onClick={() => setCategory(c)} className={`shrink-0 rounded-full border px-2.5 py-1 text-xs ${category === c ? "border-accent bg-accent/20" : "border-line text-muted"}`}>
                 {c}
               </button>
             ))}
@@ -215,10 +215,10 @@ export default function ProductForm({ product, categories }: { product?: Product
           <b>Marcar como vendido</b>
           <span className="block text-sm text-muted">Seguirá visible en la sección “Vendidos”.</span>
         </span>
-        <input type="checkbox" checked={sold} onChange={(e) => setSold(e.target.checked)} className="h-6 w-6 accent-[#ff2e4d]" />
+        <input type="checkbox" checked={sold} onChange={(e) => setSold(e.target.checked)} className="h-6 w-6 accent-[#2563eb]" />
       </label>
 
-      {error && <p className="rounded-xl bg-red-500/15 px-3 py-2 text-sm text-red-300">{error}</p>}
+      {error && <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-ink/90 p-3 backdrop-blur">
         <div className="mx-auto flex max-w-3xl gap-2">

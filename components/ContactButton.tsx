@@ -10,7 +10,7 @@ export default function ContactButton({ title, price }: { title: string; price: 
 
   if (!WHATSAPP) {
     return (
-      <p className="rounded-2xl bg-amber-500/10 p-4 text-sm text-amber-200">
+      <p className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-800">
         ⚙️ Falta configurar NEXT_PUBLIC_WHATSAPP.
       </p>
     );
