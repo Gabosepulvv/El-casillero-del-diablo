@@ -45,11 +45,3 @@ export function timeAgo(iso: string) {
   if (d < 30) return `hace ${d} día${d === 1 ? "" : "s"}`;
   return new Date(iso).toLocaleDateString(LOCALE);
 }
-
-export function contactLink(type: "phone" | "instagram", contact: string) {
-  if (type === "instagram") {
-    return `https://instagram.com/${contact.replace(/^@/, "").trim()}`;
-  }
-  const digits = contact.replace(/[^\d]/g, "");
-  return `https://wa.me/${digits}`;
-}

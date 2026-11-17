@@ -38,7 +38,7 @@ export default async function Home() {
         <Catalog products={products} />
       </main>
       <footer className="border-t border-line/60 py-6 text-center text-xs text-muted">
-        ¿Te interesa algo? Entra al producto y haz tu oferta 😈
+        ¿Te interesa algo? Entra al producto y escríbeme por WhatsApp 😈
       </footer>
     </>
   );

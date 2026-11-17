@@ -19,7 +19,7 @@ export default function ProductActions({ id, sold, title }: { id: string; sold: 
       </Link>
       <button
         onClick={() => {
-          if (confirm(`¿Eliminar "${title}" para siempre? También se borrarán sus ofertas.`)) start(() => deleteProduct(id));
+          if (confirm(`¿Eliminar "${title}" para siempre?`)) start(() => deleteProduct(id));
         }}
         className="rounded-full bg-red-500/15 px-3 py-1.5 text-xs font-bold text-red-300"
       >

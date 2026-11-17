@@ -126,22 +126,3 @@ export async function deleteProduct(id: string) {
   if (data) await removeImages(data.images as string[]);
   refresh(id);
 }
-
-// ── Ofertas ───────────────────────────────────────────────────────
-export async function setOfferSeen(id: string, seen: boolean) {
-  await requireAdmin();
-  await db().from("offers").update({ seen }).eq("id", id);
-  revalidatePath("/admin");
-}
-
-export async function markAllOffersSeen() {
-  await requireAdmin();
-  await db().from("offers").update({ seen: true }).eq("seen", false);
-  revalidatePath("/admin");
-}
-
-export async function deleteOffer(id: string) {
-  await requireAdmin();
-  await db().from("offers").delete().eq("id", id);
-  revalidatePath("/admin");
-}

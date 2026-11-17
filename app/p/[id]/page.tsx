@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Gallery from "@/components/Gallery";
-import OfferForm from "@/components/OfferForm";
+import ContactButton from "@/components/ContactButton";
 import ShareButton from "@/components/ShareButton";
 import ProductCard from "@/components/ProductCard";
 import { ConditionMeter } from "@/components/ConditionBadge";
@@ -84,7 +84,7 @@ export default async function ProductPage({ params }: Params) {
                 <p className="mt-1 text-sm text-muted">Revisa los demás productos disponibles 👇</p>
               </div>
             ) : (
-              <OfferForm productId={p.id} price={p.price} />
+              <ContactButton title={p.title} price={p.price} />
             )}
           </div>
         </div>
