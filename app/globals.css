@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0c0a0b;
+  --color-panel: #17131a;
+  --color-panel-2: #211b25;
+  --color-line: #2e2633;
+  --color-muted: #a39aa8;
+  --color-devil: #ff2e4d;
+  --color-devil-2: #ff7a1a;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-ink);
+  color: #f5f1f6;
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+}
+
+.bg-devil-grad {
+  background-image: linear-gradient(135deg, var(--color-devil), var(--color-devil-2));
+}
+.text-devil-grad {
+  background-image: linear-gradient(135deg, var(--color-devil), var(--color-devil-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+.input {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel-2);
+  padding: 0.8rem 1rem;
+  font-size: 1rem; /* 16px evita zoom automático en iOS */
+  color: inherit;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.input:focus {
+  border-color: var(--color-devil);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-devil) 25%, transparent);
+}
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border-radius: 9999px;
+  padding: .8rem 1.25rem;
+  font-weight: 700;
+  transition: transform .1s, opacity .15s, background-color .15s;
+  user-select: none;
+}
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .5; pointer-events: none; }
+.btn-primary { background-image: linear-gradient(135deg, var(--color-devil), var(--color-devil-2)); color: white; }
+.btn-ghost { background: var(--color-panel-2); border: 1px solid var(--color-line); }
+.btn-ghost:hover { background: var(--color-line); }
+
+@keyframes pop { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+.animate-pop { animation: pop .35s ease both; }
