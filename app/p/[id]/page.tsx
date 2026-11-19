@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Gallery from "@/components/Gallery";
 import ContactButton from "@/components/ContactButton";
+import OriginalPrice from "@/components/OriginalPrice";
 import ShareButton from "@/components/ShareButton";
 import ProductCard from "@/components/ProductCard";
 import { ConditionMeter } from "@/components/ConditionBadge";
@@ -76,6 +77,8 @@ export default async function ProductPage({ params }: Params) {
                 <p className="whitespace-pre-line leading-relaxed text-fg/90">{p.description}</p>
               </div>
             )}
+
+            <OriginalPrice url={p.original_url} originalPrice={p.original_price} price={p.price} />
 
             {p.sold ? (
               <div className="rounded-3xl border border-line bg-panel-2 p-6 text-center">

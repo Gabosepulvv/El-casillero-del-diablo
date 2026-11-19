@@ -55,6 +55,12 @@ Stack: Next.js + Supabase (base de datos y fotos) + Vercel (hosting). Todo en pl
 - **Te escriben**: te llega un WhatsApp tipo *"¡Hola! Me interesa "PS4 Slim" ($180.000) que vi en tu tienda: <link> ¿Sigue disponible?"*.
 - **Vendiste algo**: botón **✓ Marcar vendido** — queda en la pestaña *Vendidos* con un sello y sin botón de contacto.
 
+## 🏷️ Precio original en tienda
+
+Cada producto puede tener (opcional) el **link a una tienda** y el **precio nuevo**. En la página del producto aparece la sección *"Precio original en tienda"* con el botón **Consultar precio original en …** y cuánto ahorra el comprador.
+
+Si tu base de datos se creó antes de esta función, corre una vez [`supabase/migrations/002_precio_original.sql`](supabase/migrations/002_precio_original.sql) en **Supabase → SQL Editor**.
+
 ## 💻 Desarrollo local
 
 ```bash

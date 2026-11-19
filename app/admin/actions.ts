@@ -62,6 +62,10 @@ export type ProductInput = {
   category: string;
   images: string[];
   sold: boolean;
+  originalUrl: string;
+  originalPrice: number | null;
+  /** true si el producto ya tenía datos de precio original (para poder borrarlos). */
+  hadOriginal?: boolean;
 };
 
 function validate(input: ProductInput): string | null {
@@ -70,6 +74,10 @@ function validate(input: ProductInput): string | null {
   if (!Number.isInteger(input.condition) || input.condition < 1 || input.condition > 10)
     return "El estado debe ser de 1 a 10.";
   if (!input.images?.length) return "Sube al menos una foto.";
+  if (input.originalUrl && !/^https?:\/\/\S+\.\S+/i.test(input.originalUrl.trim()))
+    return "El link de la tienda debe empezar con https://";
+  if (input.originalPrice !== null && (!Number.isFinite(input.originalPrice) || input.originalPrice < 0))
+    return "Precio original inválido.";
   return null;
 }
 
@@ -78,7 +86,17 @@ export async function saveProduct(id: string | null, input: ProductInput): Promi
   const err = validate(input);
   if (err) return { ok: false, error: err };
 
+  const originalUrl = (input.originalUrl ?? "").trim().slice(0, 1000);
+  const originalPrice = input.originalPrice && input.originalPrice > 0 ? input.originalPrice : null;
+  // Solo enviamos estas columnas si hay algo que guardar o borrar, así la tienda sigue
+  // funcionando aunque aún no se haya corrido la migración 002 en Supabase.
+  const original =
+    originalUrl || originalPrice || input.hadOriginal
+      ? { original_url: originalUrl || null, original_price: originalPrice }
+      : {};
+
   const row = {
+    ...original,
     title: input.title.trim().slice(0, 120),
     description: (input.description ?? "").trim().slice(0, 3000),
     price: input.price,
@@ -94,7 +112,7 @@ export async function saveProduct(id: string | null, input: ProductInput): Promi
       .from("products")
       .update({ ...row, sold_at: row.sold ? (prev?.sold ? undefined : new Date().toISOString()) : null })
       .eq("id", id);
-    if (error) return { ok: false, error: error.message };
+    if (error) return { ok: false, error: friendly(error.message) };
     if (prev) await removeImages((prev.images as string[]).filter((p) => !row.images.includes(p)));
     refresh(id);
     return { ok: true, id };
@@ -105,9 +123,16 @@ export async function saveProduct(id: string | null, input: ProductInput): Promi
     .insert({ ...row, sold_at: row.sold ? new Date().toISOString() : null })
     .select("id")
     .single();
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: friendly(error.message) };
   refresh(data.id);
   return { ok: true, id: data.id };
+}
+
+function friendly(message: string) {
+  if (/original_(url|price)/.test(message)) {
+    return "Falta actualizar la base de datos para el precio original: en Supabase → SQL Editor, corre el archivo supabase/migrations/002_precio_original.sql.";
+  }
+  return message;
 }
 
 export async function setSold(id: string, sold: boolean) {

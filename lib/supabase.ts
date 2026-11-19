@@ -46,5 +46,10 @@ export async function getProduct(id: string): Promise<Product | null> {
 }
 
 function normalize(p: Product): Product {
-  return { ...p, price: Number(p.price), images: p.images ?? [] };
+  return {
+    ...p,
+    price: Number(p.price),
+    images: p.images ?? [],
+    original_price: p.original_price == null ? null : Number(p.original_price),
+  };
 }

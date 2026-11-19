@@ -23,6 +23,8 @@ export default function ProductForm({ product, categories }: { product?: Product
   const [category, setCategory] = useState(product?.category ?? "");
   const [description, setDescription] = useState(product?.description ?? "");
   const [sold, setSold] = useState(product?.sold ?? false);
+  const [originalUrl, setOriginalUrl] = useState(product?.original_url ?? "");
+  const [originalPrice, setOriginalPrice] = useState(product?.original_price ? String(product.original_price) : "");
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -54,7 +56,9 @@ export default function ProductForm({ product, categories }: { product?: Product
       return prev.filter((_, k) => k !== i);
     });
 
-  const priceNum = CURRENCY === "CLP" ? Number(price.replace(/[^\d]/g, "")) : Number(price.replace(",", "."));
+  const toNum = (v: string) => (CURRENCY === "CLP" ? Number(v.replace(/[^\d]/g, "")) : Number(v.replace(",", ".")));
+  const priceNum = toNum(price);
+  const originalPriceNum = originalPrice.trim() ? toNum(originalPrice) : null;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,6 +100,9 @@ export default function ProductForm({ product, categories }: { product?: Product
         condition,
         category,
         sold,
+        originalUrl,
+        originalPrice: originalPriceNum,
+        hadOriginal: Boolean(product?.original_url || product?.original_price),
         images: images.map((i) => i.path ?? uploaded.get(i.key)!),
       });
       if (!res.ok) throw new Error(res.error);
@@ -209,6 +216,24 @@ export default function ProductForm({ product, categories }: { product?: Product
         <label className="label" htmlFor="desc">Descripción</label>
         <textarea id="desc" className="input min-h-32" value={description} onChange={(e) => setDescription(e.target.value)} maxLength={3000} placeholder="Talla, medidas, detalles, por qué lo vendes, dónde se puede retirar…" />
       </div>
+
+      <section className="rounded-2xl border border-line bg-panel p-4">
+        <b>Precio original en tienda</b>
+        <span className="mt-0.5 block text-sm text-muted">
+          Opcional. Pega el link del producto en una tienda (Falabella, Paris, Nike…) para que el comprador compare cuánto ahorra.
+        </span>
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-[2fr_1fr] [&>*]:min-w-0">
+          <div>
+            <label className="label" htmlFor="ourl">Link de la tienda</label>
+            <input id="ourl" className="input" type="url" inputMode="url" value={originalUrl} onChange={(e) => setOriginalUrl(e.target.value)} placeholder="https://www.falabella.com/…" maxLength={1000} />
+          </div>
+          <div>
+            <label className="label" htmlFor="oprice">Precio en tienda</label>
+            <input id="oprice" className="input" inputMode={CURRENCY === "CLP" ? "numeric" : "decimal"} value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value)} placeholder="89990" />
+            {originalPriceNum ? <p className="mt-1 text-sm text-muted">{formatPrice(originalPriceNum)}</p> : null}
+          </div>
+        </div>
+      </section>
 
       <label className="flex cursor-pointer items-center justify-between rounded-2xl border border-line bg-panel p-4">
         <span>

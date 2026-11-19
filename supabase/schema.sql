@@ -16,6 +16,8 @@ create table if not exists public.products (
   images      text[] not null default '{}',
   sold        boolean not null default false,
   sold_at     timestamptz,
+  original_url   text,
+  original_price numeric(12,2),
   created_at  timestamptz not null default now()
 );
 
