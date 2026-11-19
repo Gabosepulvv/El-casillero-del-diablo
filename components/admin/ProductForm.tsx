@@ -6,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createUploadUrls, saveProduct } from "@/app/admin/actions";
 import { BUCKET, CURRENCY, SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/config";
 import { conditionColor, conditionLabel, formatPrice, imageUrl } from "@/lib/format";
-import { compressImage } from "@/lib/image";
+import { compressImage, prepareImage } from "@/lib/image";
 import type { Product } from "@/lib/types";
 
 type Img = { key: string; path?: string; file?: File; preview: string };
@@ -32,12 +32,25 @@ export default function ProductForm({ product, categories }: { product?: Product
   // liberar previews locales
   useEffect(() => () => images.forEach((i) => i.file && URL.revokeObjectURL(i.preview)), []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const addFiles = (files: FileList | null) => {
+  const [converting, setConverting] = useState(0);
+
+  const addFiles = async (files: FileList | null) => {
     if (!files) return;
-    const next = [...files]
-      .filter((f) => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name))
-      .map((file) => ({ key: crypto.randomUUID(), file, preview: URL.createObjectURL(file) }));
-    setImages((prev) => [...prev, ...next].slice(0, 15));
+    const picked = [...files].filter((f) => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name));
+    setError("");
+    setConverting((n) => n + picked.length);
+    for (const original of picked) {
+      try {
+        const file = await prepareImage(original);
+        setImages((prev) =>
+          prev.length >= 15 ? prev : [...prev, { key: crypto.randomUUID(), file, preview: URL.createObjectURL(file) }],
+        );
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "No se pudo abrir una foto.");
+      } finally {
+        setConverting((n) => n - 1);
+      }
+    }
   };
 
   const move = (i: number, d: -1 | 1) =>
@@ -139,6 +152,13 @@ export default function ProductForm({ product, categories }: { product?: Product
                 <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="grid h-7 w-7 place-items-center rounded-full bg-black/70 text-sm disabled:opacity-0" aria-label="Mover a la izquierda">←</button>
                 <button type="button" disabled={i === images.length - 1} onClick={() => move(i, 1)} className="grid h-7 w-7 place-items-center rounded-full bg-black/70 text-sm disabled:opacity-0" aria-label="Mover a la derecha">→</button>
               </div>
+            </div>
+          ))}
+          {Array.from({ length: converting }, (_, i) => (
+            <div key={`c${i}`} className="grid aspect-square animate-pulse place-items-center rounded-2xl border border-line bg-panel-2 text-center text-xs text-muted">
+              Procesando
+              <br />
+              foto…
             </div>
           ))}
           {images.length < 15 && (
@@ -248,7 +268,7 @@ export default function ProductForm({ product, categories }: { product?: Product
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-ink/90 p-3 backdrop-blur">
         <div className="mx-auto flex max-w-3xl gap-2">
           <button type="button" onClick={() => router.push("/admin")} className="btn btn-ghost" disabled={busy}>Cancelar</button>
-          <button type="submit" className="btn btn-primary flex-1" disabled={busy}>
+          <button type="submit" className="btn btn-primary flex-1" disabled={busy || converting > 0}>
             {busy ? status || "Guardando…" : product ? "Guardar cambios" : "Publicar producto"}
           </button>
         </div>
