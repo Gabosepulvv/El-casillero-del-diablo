@@ -132,6 +132,9 @@ function friendly(message: string) {
   if (/original_(url|price)/.test(message)) {
     return "Falta actualizar la base de datos para el precio original: en Supabase → SQL Editor, corre el archivo supabase/migrations/002_precio_original.sql.";
   }
+  if (/permission denied/i.test(message)) {
+    return "Supabase no dio permiso para guardar. En Supabase → SQL Editor, corre supabase/migrations/003_permisos.sql y revisa que SUPABASE_SERVICE_ROLE_KEY en Vercel sea la clave secreta (sb_secret_…).";
+  }
   return message;
 }
 

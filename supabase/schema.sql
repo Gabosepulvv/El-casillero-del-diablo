@@ -27,6 +27,11 @@ create index if not exists products_created_idx on public.products (created_at d
 -- Solo el servidor (con la service_role key) puede leer/escribir.
 alter table public.products enable row level security;
 
+-- Permisos para el servidor (algunos proyectos nuevos no los dan automáticamente)
+grant usage on schema public to service_role;
+grant all on all tables in schema public to service_role;
+alter default privileges in schema public grant all on tables to service_role;
+
 -- Bucket público para las fotos de productos
 insert into storage.buckets (id, name, public)
 values ('products', 'products', true)
